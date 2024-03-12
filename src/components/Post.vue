@@ -1,16 +1,16 @@
 <template>
-  <div class="post" v-for="(data, index) in PostData" :key="index">
+  <div class="post">
     <div class="post-header">
-      <div class="profile"></div>
-      <span class="profile-name">{{ data.name }}</span>
+      <div class="profile" :style="{backgroundImage : `url(${PostData.userImage})`}"></div>
+      <span class="profile-name">{{ PostData.name }}</span>
     </div>
-    <div class="post-body"></div>
+    <div class="post-body" :style="{backgroundImage : `url(${PostData.postImage})`}"></div>
     <div class="post-content">
-      <p>{{ data.likes }}</p>
+      <p>{{ PostData.likes }}</p>
       <p>
-        <strong>{{ data.name }}</strong> {{ data.content }}
+        <strong>{{ PostData.name }}</strong> {{ PostData.content }}
       </p>
-      <p class="date">{{ data.date }}</p>
+      <p class="date">{{ PostData.date }}</p>
     </div>
   </div>
 </template>
