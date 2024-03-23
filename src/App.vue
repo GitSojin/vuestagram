@@ -9,8 +9,25 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :PostData="PostData" />
+  <Container
+    @step1="step = $event"
+    @step2="step = $event"
+    :PostData="PostData"
+    :step="step"
+  />
   <button @click="more">더보기</button>
+  <button
+    @click="
+      DataIndex = 0;
+      errorMsg = '';
+    "
+  >
+    Reset
+  </button>
+
+  <h4 v-if="errorMsg != ''">
+    {{ errorMsg }}
+  </h4>
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -33,14 +50,23 @@ export default {
     return {
       PostData: data,
       DataIndex: 0,
+      errorMsg: "",
+      step: 0,
     };
   },
   methods: {
     more() {
+      this.errorMsg = "";
       axios
         .get(`https://codingapple1.github.io/vue/more${this.DataIndex}.json`)
-        .then((result) => this.PostData.push(result.data));
-      this.DataIndex++;
+        .then((result) => {
+          this.PostData.push(result.data);
+          this.DataIndex++;
+        })
+        .catch((error) => {
+          // console.log(error.message);
+          this.errorMsg = error?.message ?? "Unknown Error occured.";
+        });
     },
   },
 };
