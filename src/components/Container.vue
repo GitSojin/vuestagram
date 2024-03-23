@@ -1,12 +1,15 @@
 <template>
-  <div v-if="step==0">
+  <div v-if="step == 0">
     <div v-for="(a, i) in PostData" :key="i">
       <Post :PostData="a" />
     </div>
   </div>
 
   <div v-if="step == 1">
-    <div class="upload-image" :style="{backgroundImage:`url(${imageUrl})`}"></div>
+    <div
+      class="upload-image"
+      :style="{ backgroundImage: `url(${imageUrl})` }"
+    ></div>
     <div class="filters">
       <div class="filter-1"></div>
       <div class="filter-1"></div>
@@ -16,13 +19,19 @@
     </div>
   </div>
   <div v-if="step == 2">
-    <div class="upload-image" :style="{backgroundImage:`url(${imageUrl})`}"></div>
+    <div
+      class="upload-image"
+      :style="{ backgroundImage: `url(${imageUrl})` }"
+    ></div>
     <div class="write">
-      <textarea class="write-box">write!</textarea>
+      <textarea
+        @input="$emit('writePost', $event.target.value)"
+        class="write-box"
+      >
+write</textarea
+      >
     </div>
   </div>
-  <button @click="$emit('step1', 1)">image upload</button>
-  <button @click="$emit('step2', 2)">write upload</button>
 </template>
 <script>
 import Post from "./Post.vue";
@@ -31,7 +40,7 @@ export default {
   props: {
     PostData: Array,
     step: Number,
-    imageUrl: String
+    imageUrl: String,
   },
 };
 </script>

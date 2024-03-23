@@ -4,17 +4,17 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step == 1" @click="step = 2">Next</li>
+      <li v-if="step == 2" @click="publish">발행</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container
-    @step1="step = $event"
-    @step2="step = $event"
+  <Container @writePost="this.myTextData=$event"
     :PostData="PostData"
     :step="step"
     :imageUrl="imageUrl"
+    :myTextData="myTextData"
   />
   <button @click="more">더보기</button>
   <button
@@ -35,8 +35,8 @@
       <input @change="upload" type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
-  </div></template>
-
+  </div>
+</template>
 
 <script>
 import Container from "./components/Container.vue";
@@ -54,6 +54,7 @@ export default {
       errorMsg: "",
       step: 0,
       imageUrl: "",
+      myTextData: ""
     };
   },
   methods: {
@@ -75,6 +76,20 @@ export default {
       this.step = 1;
       let url = URL.createObjectURL(uploadFile[0]);
       this.imageUrl = url;
+    },
+    publish() {
+      var myPost = {
+        name: "Kim Sojin",
+        userImage: "https://picsum.photos/100?random=3",
+        postImage: this.imageUrl,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.myTextData,
+        filter: "perpetua",
+      };
+      this.PostData.unshift(myPost);
+      this.step = 0;
     },
   },
 };
