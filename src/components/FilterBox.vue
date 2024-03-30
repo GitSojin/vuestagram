@@ -3,7 +3,9 @@
     :class="filter"
     class="a filter-item"
     :style="{ backgroundImage: `url(${imageUrl})` }"
-  ></div>
+  >
+    <slot></slot>
+  </div>
 </template>
 <script>
 export default {

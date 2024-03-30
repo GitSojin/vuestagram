@@ -16,7 +16,9 @@
         :imageUrl="imageUrl"
         v-for="filter in filterData"
         :key="filter"
-      ></FilterBox>
+      >
+        {{ filter }}
+      </FilterBox>
     </div>
   </div>
   <div v-if="step == 2">
