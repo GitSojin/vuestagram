@@ -11,11 +11,12 @@
       :style="{ backgroundImage: `url(${imageUrl})` }"
     ></div>
     <div class="filters">
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
+      <FilterBox
+        :filter="filter"
+        :imageUrl="imageUrl"
+        v-for="filter in filterData"
+        :key="filter"
+      ></FilterBox>
     </div>
   </div>
   <div v-if="step == 2">
@@ -35,12 +36,45 @@ write</textarea
 </template>
 <script>
 import Post from "./Post.vue";
+import FilterBox from "./FilterBox.vue";
 export default {
-  components: { Post: Post },
+  components: { Post: Post, FilterBox: FilterBox },
   props: {
     PostData: Array,
     step: Number,
     imageUrl: String,
+  },
+  data() {
+    return {
+      filterData: [
+        "aden",
+        "_1977",
+        "brannan",
+        "brooklyn",
+        "clarendon",
+        "earlybird",
+        "gingham",
+        "hudson",
+        "inkwell",
+        "kelvin",
+        "lark",
+        "lofi",
+        "maven",
+        "mayfair",
+        "moon",
+        "nashville",
+        "perpetua",
+        "reyes",
+        "rise",
+        "slumber",
+        "stinson",
+        "toaster",
+        "valencia",
+        "walden",
+        "willow",
+        "xpro2",
+      ],
+    };
   },
 };
 </script>

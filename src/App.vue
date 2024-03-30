@@ -10,7 +10,8 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container @writePost="this.myTextData=$event"
+  <Container
+    @writePost="this.myTextData = $event"
     :PostData="PostData"
     :step="step"
     :imageUrl="imageUrl"
@@ -54,7 +55,7 @@ export default {
       errorMsg: "",
       step: 0,
       imageUrl: "",
-      myTextData: ""
+      myTextData: "",
     };
   },
   methods: {
