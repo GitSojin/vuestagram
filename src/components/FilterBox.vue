@@ -1,18 +1,26 @@
 <template>
-  <div
-    :class="filter"
-    class="a filter-item"
-    :style="{ backgroundImage: `url(${imageUrl})` }"
-  >
+  <div :class="filter" class="filter-item" :style="{backgroundImage: `url(${imageUrl})`}">
     <slot></slot>
+    <button @click="fire()">버튼</button>
   </div>
 </template>
 <script>
 export default {
-  name: "filterbox",
+  name: 'filterbox',
   props: {
     imageUrl: String,
     filter: String,
+  },
+  data(){
+    return{
+        fiter:""
+    }
+  },
+  methods: {
+    fire() {
+      console.log(`[Clicked] filter : ${this.filter}`);
+      this.emitter.emit('customFilter', this.filter);
+    },
   },
 };
 </script>

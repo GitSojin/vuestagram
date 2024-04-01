@@ -6,75 +6,67 @@
   </div>
 
   <div v-if="step == 1">
-    <div
-      class="upload-image"
-      :style="{ backgroundImage: `url(${imageUrl})` }"
-    ></div>
+    <div :class="this.selectedFilter" class="upload-image" :style="{backgroundImage: `url(${imageUrl})`}"></div>
     <div class="filters">
-      <FilterBox
-        :filter="filter"
-        :imageUrl="imageUrl"
-        v-for="filter in filterData"
-        :key="filter"
-      >
+      <FilterBox :filter="filter" :imageUrl="imageUrl" v-for="filter in filterData" :key="filter">
         {{ filter }}
       </FilterBox>
     </div>
   </div>
   <div v-if="step == 2">
-    <div
-      class="upload-image"
-      :style="{ backgroundImage: `url(${imageUrl})` }"
-    ></div>
+    <div :class="this.selectedFilter" class="upload-image" :style="{backgroundImage: `url(${imageUrl})`}"></div>
     <div class="write">
-      <textarea
-        @input="$emit('writePost', $event.target.value)"
-        class="write-box"
-      >
-write</textarea
-      >
+      <textarea @input="$emit('writePost', $event.target.value)" class="write-box">write</textarea>
     </div>
   </div>
 </template>
 <script>
-import Post from "./Post.vue";
-import FilterBox from "./FilterBox.vue";
+import Post from './Post.vue';
+import FilterBox from './FilterBox.vue';
 export default {
-  components: { Post: Post, FilterBox: FilterBox },
+  components: {Post: Post, FilterBox: FilterBox},
   props: {
     PostData: Array,
     step: Number,
     imageUrl: String,
   },
+  mounted() {
+    this.emitter.on('customFilter', (event) => {
+      console.log(`[Container.vue_On] customFilter Event: ${event}`);
+      this.selectedFilter = event;
+    });
+  },
+
   data() {
     return {
+      selectedFilter: '',
       filterData: [
-        "aden",
-        "_1977",
-        "brannan",
-        "brooklyn",
-        "clarendon",
-        "earlybird",
-        "gingham",
-        "hudson",
-        "inkwell",
-        "kelvin",
-        "lark",
-        "lofi",
-        "maven",
-        "mayfair",
-        "moon",
-        "nashville",
-        "perpetua",
-        "reyes",
-        "rise",
-        "slumber",
-        "stinson",
-        "toaster",
-        "valencia",
-        "walden",
-        "willow",
-        "xpro2",
+        'aden',
+        '_1977',
+        'brannan',
+        'brooklyn',
+        'clarendon',
+        'earlybird',
+        'gingham',
+        'hudson',
+        'inkwell',
+        'kelvin',
+        'lark',
+        'lofi',
+        'maven',
+        'mayfair',
+        'moon',
+        'nashville',
+        'perpetua',
+        'reyes',
+        'rise',
+        'slumber',
+        'stinson',
+        'toaster',
+        'valencia',
+        'walden',
+        'willow',
+        'xpro2',
       ],
     };
   },

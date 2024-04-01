@@ -5,10 +5,10 @@
     </ul>
     <ul class="header-button-right">
       <li v-if="step == 1" @click="step = 2">Next</li>
-      <li v-if="step == 2" @click="publish">발행</li>
+      <li v-if="step == 2" @click="publish()">발행</li>
     </ul>
-    <img src="./assets/logo.png" class="logo" />
   </div>
+
 
   <Container
     @writePost="this.myTextData = $event"
@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import Container from "./components/Container.vue";
-import data from "./components/PostData";
-import axios from "axios";
+import Container from './components/Container.vue';
+import data from './components/PostData';
+import axios from 'axios';
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Container: Container,
   },
@@ -52,15 +52,22 @@ export default {
     return {
       PostData: data,
       DataIndex: 0,
-      errorMsg: "",
+      errorMsg: '',
       step: 0,
-      imageUrl: "",
-      myTextData: "",
+      imageUrl: '',
+      myTextData: '',
+      selectedFilter: '',
     };
+  },
+  mounted() {
+    this.emitter.on('customFilter', (event) => {
+      console.log(`[App.vue_On] customFilter Event: ${event}`);
+      this.selectedFilter = event;
+    });
   },
   methods: {
     more() {
-      this.errorMsg = "";
+      this.errorMsg = '';
       axios
         .get(`https://codingapple1.github.io/vue/more${this.DataIndex}.json`)
         .then((result) => {
@@ -69,7 +76,7 @@ export default {
         })
         .catch((error) => {
           // console.log(error.message);
-          this.errorMsg = error?.message ?? "Unknown Error occured.";
+          this.errorMsg = error?.message ?? 'Unknown Error occured.';
         });
     },
     upload(e) {
@@ -79,16 +86,18 @@ export default {
       this.imageUrl = url;
     },
     publish() {
-      var myPost = {
-        name: "Kim Sojin",
-        userImage: "https://picsum.photos/100?random=3",
+      const myPost = {
+        name: 'Kim Sojin',
+        userImage: 'https://picsum.photos/100?random=3',
         postImage: this.imageUrl,
         likes: 36,
-        date: "May 15",
+        date: 'May 15',
         liked: false,
         content: this.myTextData,
-        filter: "perpetua",
+        filter: this.selectedFilter,
       };
+      console.log("[publish]");
+      console.log(myPost);
       this.PostData.unshift(myPost);
       this.step = 0;
     },
@@ -97,5 +106,5 @@ export default {
 </script>
 
 <style>
-@import "style.css";
+@import 'style.css';
 </style>

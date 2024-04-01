@@ -1,10 +1,10 @@
 <template>
   <div class="post">
     <div class="post-header">
-      <div class="profile" :style="{backgroundImage : `url(${PostData.userImage})`}"></div>
+      <div class="profile" :style="{backgroundImage: `url(${PostData.userImage})`}"></div>
       <span class="profile-name">{{ PostData.name }}</span>
     </div>
-    <div class="post-body" :style="{backgroundImage : `url(${PostData.postImage})`}"></div>
+    <div :class="PostData?.filter" class="post-body" :style="{backgroundImage: `url(${PostData.postImage})`}"></div>
     <div class="post-content">
       <p>{{ PostData.likes }}</p>
       <p>
@@ -26,7 +26,7 @@ export default {
   width: 100%;
 }
 .profile {
-  background-image: url("https://picsum.photos/100?random=0");
+  background-image: url('https://picsum.photos/100?random=0');
   width: 30px;
   height: 30px;
   background-size: 100%;
@@ -45,7 +45,7 @@ export default {
   padding: 10px;
 }
 .post-body {
-  background-image: url("https://picsum.photos/600?random=0");
+  background-image: url('https://picsum.photos/600?random=0');
   height: 450px;
   background-position: center;
   background-size: cover;
