@@ -1,7 +1,7 @@
 <template>
   <div v-if="step == 0">
     <div v-for="(a, i) in PostData" :key="i">
-      <Post :PostData="a" />
+      <Post :PostData="a" :index="i" />
     </div>
   </div>
 

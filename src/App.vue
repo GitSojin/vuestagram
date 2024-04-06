@@ -8,11 +8,9 @@
       <li v-if="step == 2" @click="publish()">발행</li>
     </ul>
   </div>
-
-
   <Container
     @writePost="this.myTextData = $event"
-    :PostData="PostData"
+    :PostData="$store.state.PostData"
     :step="step"
     :imageUrl="imageUrl"
     :myTextData="myTextData"
@@ -27,8 +25,8 @@
     Reset
   </button>
 
-  <h4 v-if="errorMsg != ''">
-    {{ errorMsg }}
+  <h4 v-if="$store.state.errorMessage != ''">
+    {{ $store.state.errorMessage }}
   </h4>
 
   <div class="footer">
@@ -41,8 +39,6 @@
 
 <script>
 import Container from './components/Container.vue';
-import data from './components/PostData';
-import axios from 'axios';
 export default {
   name: 'App',
   components: {
@@ -50,7 +46,6 @@ export default {
   },
   data() {
     return {
-      PostData: data,
       DataIndex: 0,
       errorMsg: '',
       step: 0,
@@ -66,18 +61,8 @@ export default {
     });
   },
   methods: {
-    more() {
-      this.errorMsg = '';
-      axios
-        .get(`https://codingapple1.github.io/vue/more${this.DataIndex}.json`)
-        .then((result) => {
-          this.PostData.push(result.data);
-          this.DataIndex++;
-        })
-        .catch((error) => {
-          // console.log(error.message);
-          this.errorMsg = error?.message ?? 'Unknown Error occured.';
-        });
+    async more() {
+      this.DataIndex = await this.$store.dispatch('more', this.DataIndex);
     },
     upload(e) {
       let uploadFile = e.target.files;
@@ -96,9 +81,10 @@ export default {
         content: this.myTextData,
         filter: this.selectedFilter,
       };
-      console.log("[publish]");
-      console.log(myPost);
-      this.PostData.unshift(myPost);
+      // console.log('[publish]');
+      // console.log(myPost);
+      // this.PostData.unshift(myPost);
+      this.$store.commit('unShiftPostData', myPost);
       this.step = 0;
     },
   },

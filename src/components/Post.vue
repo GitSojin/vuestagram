@@ -4,9 +4,14 @@
       <div class="profile" :style="{backgroundImage: `url(${PostData.userImage})`}"></div>
       <span class="profile-name">{{ PostData.name }}</span>
     </div>
-    <div :class="PostData?.filter" class="post-body" :style="{backgroundImage: `url(${PostData.postImage})`}"></div>
+    <div
+      @click="$store.commit('changePostLikes', index)"
+      :class="PostData?.filter"
+      class="post-body"
+      :style="{backgroundImage: `url(${PostData.postImage})`}"
+    ></div>
     <div class="post-content">
-      <p>{{ PostData.likes }}</p>
+      <p :style="{color: PostData.liked ? 'red' : 'black'}"><span>Likes </span>{{ PostData.likes }}</p>
       <p>
         <strong>{{ PostData.name }}</strong> {{ PostData.content }}
       </p>
@@ -18,6 +23,7 @@
 export default {
   props: {
     PostData: Array,
+    index: Number,
   },
 };
 </script>
