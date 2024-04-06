@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     async more() {
-      this.DataIndex = await this.$store.dispatch('more', this.DataIndex);
+      this.DataIndex = await this.$store.dispatch('getMorePost', this.DataIndex);
     },
     upload(e) {
       let uploadFile = e.target.files;

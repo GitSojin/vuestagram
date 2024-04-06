@@ -7,10 +7,14 @@ const store = createStore({
     return {
       PostData: PostData,
       errorMessage: '',
+      DataIndex:0 
     };
   },
 
   mutations: {
+    setDataIndex(state,index){
+        state.DataIndex=index
+    },
     pushPostData(state, data) {
       console.log('[PushPostData] Data: ', data);
       state.PostData.push(data);
@@ -53,10 +57,11 @@ const store = createStore({
 
         // 
         context.commit('pushPostData', response.data);
-        return index++;
+        context.commit('setDataIndex',index++);
+        return index
       } catch (error) {
         context.commit('setErrorMessage', `Oh-Uh, Something went wrong! ${error}`);
-        return index;
+        return index
       }
     },
   },
